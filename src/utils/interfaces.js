@@ -70,6 +70,7 @@ export default{
     couponGroupList: platform + 'couponGroup/couponGroupList.json',
     couponInfoList: platform + 'coupon/couponInfoList.json',
     couponInfoGet: platform + 'coupon/couponInfoGet.json',
+    couponGet: platform + 'coupon/couponGet.json',
     couponInfoChangeStatus: platform + 'coupon/couponInfoChangeStatus.json',
     getCouponType: platform + 'coupon/getCouponType.json',
     couponGroupOfPage: platform + 'couponGroup/couponGroupOfPage.json',

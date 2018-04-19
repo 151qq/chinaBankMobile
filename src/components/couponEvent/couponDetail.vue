@@ -154,16 +154,17 @@ export default {
     methods: {
         getBase () {
             var formData = {
-                couponCode: this.$route.query.couponCode
+                couponCode: this.$route.query.couponCode,
+                couponGroupCode: this.$route.query.couponGroupCode
             }
 
             util.request({
                 method: 'get',
-                interface: 'couponInfoGet',
+                interface: 'couponGet',
                 data: formData
             }).then(res => {
                 if (res.result.success == '1') {
-                    var result = res.result.result.couponInfo
+                    var result = res.result.result
 
                     this.couponTimes = this.formDataDate(result.couponGroupBeginTimestamp, result.couponGroupEndTimestamp)
                     

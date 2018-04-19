@@ -55,7 +55,8 @@
                             query: {
                                 enterpriseCode: $route.query.enterpriseCode,
                                 agentId: $route.query.agentId,
-                                couponCode: item.couponCode
+                                couponCode: item.couponCode,
+                                couponGroupCode: group.couponGroupCode
                             }
                         }">
                     <div class="weui-media-box__hd">
@@ -186,6 +187,7 @@ export default {
             },
             couponList: [],
             couponCodeList: [],
+            groupCodes: [],
             pageNumber: 1,
             pageSize: 20,
             total: 0,
@@ -271,17 +273,29 @@ export default {
                 this.isPage = true
 
                 this.couponList = res.result.result
+                var codeData = {}
                 var atts = []
+                var groups = []
                 if (res.result.result.length) {
                     res.result.result.forEach((item) => {
                         if (item.couponInfoList.length) {
                             item.couponInfoList.forEach((coupon) => {
-                                atts.push(coupon.couponCode)
+                                if (codeData[coupon.couponCode]) {
+                                    codeData[coupon.couponCode].push(item.couponGroupCode)
+                                } else {
+                                    codeData[coupon.couponCode] = [item.couponGroupCode]
+                                }
                             })
                         }
                     })
+
+                    for (var key in codeData) {
+                        atts.push(key)
+                        groups.push(codeData[key].join(','))
+                    }
                 }
                 this.couponCodeList = atts
+                this.groupCodes = groups
             })
         },
         gotoUser () {
@@ -302,7 +316,8 @@ export default {
             var formData = {
                 enterpriseCode: this.$route.query.enterpriseCode,
                 eventCode: this.$route.query.eventCode,
-                couponCodes: this.couponCodeList
+                couponCodes: this.couponCodeList,
+                groupCodes: this.groupCodes
             }
 
             this.isLoading = true
